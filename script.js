@@ -6,8 +6,7 @@ var warPlayerScore = 0;
 var warComputerScore = 0;
 var waitForYourTurn = 0;
 var hasDoneFirstShuffle = 0;
-var playerDeck = [ " " ];
-var computerDeck = [ " " ];
+var splitDeck = [ " " ];
 
 
 $(".player-castle").click(function(){
@@ -34,11 +33,8 @@ var warDeck = [
 
 function cutTheDeck(){
   console.log(warDeck);
-  var computerDeck = warDeck.splice(26, 0);
-  console.log(computerDeck);
-  console.log(warDeck);
-  var playerDeck = warDeck.splice(26, 0);
-  console.log(playerDeck);
+  splitDeck = warDeck.splice(26, 52);
+  console.log(splitDeck);
   console.log(warDeck);
 }
 
