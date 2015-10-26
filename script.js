@@ -23,7 +23,7 @@ $(".player-castle").click(function(){
   }
 });
 
-////////////////////////// Card deck array & shuffle mechanism
+////////////////////////// Card deck array & shuffle button
 
 // 14 is Ace, 13 is King, 12 is Queen, 11 is Jack.
 var warDeck = [
@@ -31,11 +31,13 @@ var warDeck = [
 ];
 
 $(".shuffle").click(function(){
-  if (hasDoneFirstShuffle === 0){
-    hasDoneFirstShuffle = 1;
-    $(".player-castle").text("Start battle").removeClass("grey-castle");
-    $(".computer-castle").removeClass("grey-castle");
+  if (hasDoneFirstShuffle === 1){
+    return;
   }
+  hasDoneFirstShuffle = 1;
+  $(".player-castle").text("Start battle").removeClass("grey-castle");
+  $(".computer-castle").removeClass("grey-castle");
+  $(".shuffle").text("Deck shuffled").addClass("grey-castle");
   console.log(warDeck);
   for (i = warDeck.length - 1; i > 0; i--){
     var j = Math.floor(Math.random() * (i + 1));
