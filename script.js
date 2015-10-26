@@ -9,6 +9,7 @@ var warComputerBattleResult = 0;
 var waitForYourTurn = 0;
 var hasDoneFirstShuffle = 0;
 var splitDeck = [ " " ];
+var gameOver = 0;
 
 ///////////////////////// Click the castle
 
@@ -19,10 +20,15 @@ $(".player-castle").click(function(){
     $(".player-castle").text("Resolving battle...").addClass("grey-castle");
     $(".computer-castle").addClass("grey-castle");
     window.setTimeout(function(){
-      waitForYourTurn = 0;
-      $(".player-castle").text("Start battle").removeClass("grey-castle");
-      $(".computer-castle").removeClass("grey-castle");
-    }, 1200);
+      if (gameOver === 0){
+        waitForYourTurn = 0;
+        $(".player-castle").text("Start battle").removeClass("grey-castle");
+        $(".computer-castle").removeClass("grey-castle");
+      }
+      else {
+        decideWinner();
+      }
+    }, 1500);
   }
 });
 
@@ -31,28 +37,41 @@ $(".player-castle").click(function(){
 function warBattle(){
   setTimeout(function(){
     warPlayerBattleResult = warDeck.pop();
+    console.log(warPlayerBattleResult);
     $(".player-battle").text(warPlayerBattleResult);
     warComputerBattleResult = splitDeck.pop();
+    console.log(warComputerBattleResult);
     $(".computer-battle").text(warComputerBattleResult);
+    console.log(warPlayerScore);
     if (warPlayerBattleResult > warComputerBattleResult){
       warPlayerScore++;
-      $(".player-score").text(warPlayerScore);
+      console.log(warPlayerScore);
+      setTimeout(function(){
+        $(".player-score").text(warPlayerScore);
+        console.log(warPlayerScore);
+      }, 500);
     }
     else if (warComputerBattleResult > warPlayerBattleResult){
       warComputerScore++;
-      $(".computer-score").text(warComputerScore);
+      setTimeout(function(){
+        $(".computer-score").text(warComputerScore);
+      }, 500);
     }
     else {
       //draw
     }
   }, 500);
+  if (warDeck.length === 0){
+    alert("Game over!");
+    gameOver = 1;
+  }
 }
 
 ///////////////////////// Card deck array & shuffle button
 
 // 14 is Ace, 13 is King, 12 is Queen, 11 is Jack.
 var warDeck = [
-  "14", "14", "14", "14", "13", "13", "13", "13", "12", "12", "12", "12", "11", "11", "11", "11", "10", "10", "10", "10", "9", "9", "9", "9", "8", "8", "8", "8", "7", "7", "7", "7", "6", "6", "6", "6", "5", "5", "5", "5", "4", "4", "4", "4", "3", "3", "3", "3", "2", "2", "2", "2"
+  14, 14, 14, 14, 13, 13, 13, 13, 12, 12, 12, 12, 11, 11, 11, 11, 10, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2
 ];
 
 function cutTheDeck(){
@@ -78,6 +97,12 @@ $(".shuffle").click(function(){
   }
   cutTheDeck();
 });
+
+///////////////////////// Decide the winner
+
+function decideWinner(){
+  
+}
 
 /////////////////////// {stop} /////// DON'T WRITE CODE PAST HERE OR IT WON'T WORK /////// {stop} /////////////////////////
 });
