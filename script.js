@@ -62,7 +62,6 @@ function warBattle(){
     }
   }, 500);
   if (warDeck.length === 0){
-    alert("Game over!");
     gameOver = 1;
   }
 }
@@ -101,7 +100,18 @@ $(".shuffle").click(function(){
 ///////////////////////// Decide the winner
 
 function decideWinner(){
-  
+  if (warPlayerScore > warComputerScore){
+    $(".player-castle").text("Victory!").removeClass("grey-castle");
+    $(".computer-castle").removeClass("grey-castle");
+  }
+  if (warComputerScore > warPlayerScore){
+    $(".computer-castle").text("Victory!").removeClass("grey-castle");
+    $(".player-castle").text(" ").removeClass("grey-castle");
+  }
+  else {
+    $(".player-castle").text("Armistice signed.").removeClass("grey-castle");
+    $(".computer-castle").text("Armistice signed.").removeClass("grey-castle");
+  }
 }
 
 /////////////////////// {stop} /////// DON'T WRITE CODE PAST HERE OR IT WON'T WORK /////// {stop} /////////////////////////
