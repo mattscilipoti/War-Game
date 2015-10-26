@@ -35,30 +35,28 @@ $(".player-castle").click(function(){
 ///////////////////////// Battle & compare
 
 function warBattle(){
+  $(".shuffle").text("A battle begins!");
   setTimeout(function(){
     warPlayerBattleResult = warDeck.pop();
-    console.log(warPlayerBattleResult);
     $(".player-battle").text(warPlayerBattleResult);
     warComputerBattleResult = splitDeck.pop();
-    console.log(warComputerBattleResult);
     $(".computer-battle").text(warComputerBattleResult);
-    console.log(warPlayerScore);
     if (warPlayerBattleResult > warComputerBattleResult){
       warPlayerScore++;
-      console.log(warPlayerScore);
       setTimeout(function(){
         $(".player-score").text(warPlayerScore);
-        console.log(warPlayerScore);
+        $(".shuffle").text("West Kingdom gains ground");
       }, 500);
     }
     else if (warComputerBattleResult > warPlayerBattleResult){
       warComputerScore++;
       setTimeout(function(){
         $(".computer-score").text(warComputerScore);
+        $(".shuffle").text("East Kingdom gains ground");
       }, 500);
     }
     else {
-      //draw
+      $(".shuffle").text("Draw");
     }
   }, 500);
   if (warDeck.length === 0){
@@ -87,7 +85,7 @@ $(".shuffle").click(function(){
   hasDoneFirstShuffle = 1;
   $(".player-castle").text("Start battle").removeClass("grey-castle");
   $(".computer-castle").removeClass("grey-castle");
-  $(".shuffle").text("Deck shuffled").addClass("grey-castle");
+  $(".shuffle").text("War declared").addClass("grey-castle");
   for (i = warDeck.length - 1; i > 0; i--){
     var j = Math.floor(Math.random() * (i + 1));
     var temp = warDeck[i];
@@ -101,16 +99,19 @@ $(".shuffle").click(function(){
 
 function decideWinner(){
   if (warPlayerScore > warComputerScore){
+    $(".shuffle").text("West Kingdom victorious");
     $(".player-castle").text("Victory!").removeClass("grey-castle");
-    $(".computer-castle").removeClass("grey-castle");
+    $(".computer-castle").html("<img src=\"fire.gif\" alt=\"Fire is destroying the west castle.\" />").removeClass("grey-castle");
   }
   if (warComputerScore > warPlayerScore){
+    $(".shuffle").text("East Kingdom victorious");
     $(".computer-castle").text("Victory!").removeClass("grey-castle");
-    $(".player-castle").text(" ").removeClass("grey-castle");
+    $(".player-castle").html("<img src=\"fire.gif\" alt=\"Fire is destroying the east castle.\" />").removeClass("grey-castle");
   }
   else {
-    $(".player-castle").text("Armistice signed.").removeClass("grey-castle");
-    $(".computer-castle").text("Armistice signed.").removeClass("grey-castle");
+    $(".shuffle").text("An armistice is signed");
+    $(".player-castle").text("Draw").removeClass("grey-castle");
+    $(".computer-castle").text("Draw").removeClass("grey-castle");
   }
 }
 

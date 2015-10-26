@@ -50,29 +50,36 @@
 
 .board-area {
   text-align: center;
-  background: #FF0000;
+  background: #9CB76D;
   width: 950px;
   height: 300px;
   margin-left:auto;
   margin-right: auto;
   padding: 10px;
+  border-bottom: 20px solid #AD855C;
 }
 
 .board {
-  background: #0000FF;
   display: inline-block;
   width: 45%;
   height: 90%;
   margin: 15px;
 }
 
+.player-board {
+  background-color: #A3D119;
+}
+
+.computer-board {
+  background-color: #ADD6FF;
+}
+
 /* --------------- Castles --------------- */
 
 .castle {
   width: 215px;
-  height: 150px;
+  height: 90%;
   background-size: cover;
-  background-color: #FF0000;
   margin: 5px;
   padding: 45px 30px 0 30px;
   font-family: "Cinzel", serif;
@@ -84,19 +91,15 @@
 }
 
 .player-castle {
+  background-color: #C0D453;
   background-image: url("castle1.png");
   float: left;
 }
 
 .computer-castle {
+  background-color: #C2DFFD;
   background-image: url("castle2.png");
   float: right;
-  -moz-transform: scaleX(-1);
-  -o-transform: scaleX(-1);
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-  filter: FlipH;
-  -ms-filter: "FlipH";
 }
 
 .grey-castle {
@@ -112,7 +115,6 @@
 .battle {
   width: 175px;
   height: 225px;
-  background-color: #FF0000;
   padding-top: 70px;
   margin: 5px;
   font-family: "Cinzel", serif;
@@ -122,10 +124,12 @@
 }
 
 .player-battle {
+  background-color: #D2D87A;
   float: right;
 }
 
 .computer-battle {
+  background-color: #D1E7FE;
   float: left;
 }
 
@@ -133,6 +137,7 @@
 
 .shuffle {
   text-align: center;
+  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   width: 400px;
