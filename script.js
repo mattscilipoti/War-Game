@@ -1,6 +1,6 @@
- $( document ).ready( function(){
+ $( document ).ready(function(){
 
-///////////////////////// Score setup & increase functions
+///////////////////////// Variables
 
 var warPlayerScore = 0;
 var warComputerScore = 0;
@@ -8,10 +8,11 @@ var waitForYourTurn = 0;
 var hasDoneFirstShuffle = 0;
 var splitDeck = [ " " ];
 
+///////////////////////// Click the castle
 
 $(".player-castle").click(function(){
   if (hasDoneFirstShuffle === 1 && waitForYourTurn === 0){
-    warPlayerScore++;
+    warBattle();
     waitForYourTurn = 1;
     $(".player-castle").text("Resolving battle...").addClass("grey-castle");
     $(".computer-castle").addClass("grey-castle");
@@ -24,7 +25,13 @@ $(".player-castle").click(function(){
   }
 });
 
-////////////////////////// Card deck array & shuffle button
+///////////////////////// Battle & compare
+
+function warBattle(){
+  alert("A battle occurred!");
+}
+
+///////////////////////// Card deck array & shuffle button
 
 // 14 is Ace, 13 is King, 12 is Queen, 11 is Jack.
 var warDeck = [
