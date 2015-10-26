@@ -4,6 +4,8 @@
 
 var warPlayerScore = 0;
 var warComputerScore = 0;
+var warPlayerBattleResult = 0;
+var warComputerBattleResult = 0;
 var waitForYourTurn = 0;
 var hasDoneFirstShuffle = 0;
 var splitDeck = [ " " ];
@@ -21,14 +23,29 @@ $(".player-castle").click(function(){
       $(".player-castle").text("Start battle").removeClass("grey-castle");
       $(".computer-castle").removeClass("grey-castle");
     }, 1200);
-    $(".player-score").text(warPlayerScore);
   }
 });
 
 ///////////////////////// Battle & compare
 
 function warBattle(){
-  alert("A battle occurred!");
+  setTimeout(function(){
+    warPlayerBattleResult = warDeck.pop();
+    $(".player-battle").text(warPlayerBattleResult);
+    warComputerBattleResult = splitDeck.pop();
+    $(".computer-battle").text(warComputerBattleResult);
+    if (warPlayerBattleResult > warComputerBattleResult){
+      warPlayerScore++;
+      $(".player-score").text(warPlayerScore);
+    }
+    else if (warComputerBattleResult > warPlayerBattleResult){
+      warComputerScore++;
+      $(".computer-score").text(warComputerScore);
+    }
+    else {
+      //draw
+    }
+  }, 500);
 }
 
 ///////////////////////// Card deck array & shuffle button

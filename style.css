@@ -43,9 +43,9 @@
   margin: 5px;
   padding: 15px;
   font-family: "Cinzel", serif;
-  font-weight: 900;
+  font-weight: 400;
   color: #FFF;
-  font-size: 40px;
+  font-size: 45px;
 }
 
 .board-area {
@@ -113,7 +113,12 @@
   width: 175px;
   height: 225px;
   background-color: #FF0000;
+  padding-top: 70px;
   margin: 5px;
+  font-family: "Cinzel", serif;
+  font-weight: 900;
+  color: #FFF;
+  font-size: 75px;
 }
 
 .player-battle {
