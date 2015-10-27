@@ -1,40 +1,52 @@
  $( document ).ready(function(){
 
+window.setTimeout(function(){
+    $(".overlay").fadeOut("6000", function(){});
+}, 1500);
+
+  //gameInitialize();
+  // $(".shuffle").click(shuffleDeck);
+
 ///////////////////////// Variables
 
-var warPlayerScore = 0;
-var warComputerScore = 0;
-var warPlayerBattleResult = 0;
+var west = {
+  name: "West",
+  deck: [ 14, 14, 14, 14, 13, 13, 13, 13, 12, 12, 12, 12, 11, 11, 11, 11, 10, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2 ],
+};
+
+var east = {
+  name: "East",
+  deck: [ " " ],
+};
+
+var warWestBattleResult = 0;
 var warComputerBattleResult = 0;
 var waitForYourTurn = 0;
 var hasDoneFirstShuffle = 0;
-var splitDeck = [ " " ];
 var gameOver = 0;
 var battleArray = [ " " ];
-var battleArrayWarPlayer = [ " " ];
+var battleArrayWarWest = [ " " ];
 
 ///////////////////////// Update both scores
 
 function updateScores(){
-warPlayerScore = warDeck.length;
-warComputerScore = splitDeck.length;
-$(".player-score").text(warPlayerScore);
-$(".computer-score").text(warComputerScore);
+$(".west-score").text(west.deck.length);
+$(".east-score").text(east.deck.length);
 }
 
 ///////////////////////// Click the castle
 
-$(".player-castle").click(function(){
+$(".west-castle").click(function(){
   if (hasDoneFirstShuffle === 1 && waitForYourTurn === 0){
     warBattle();
     waitForYourTurn = 1;
-    $(".player-castle").text("Forces engaged").addClass("grey-castle");
-    $(".computer-castle").addClass("grey-castle");
+    $(".west-castle").text("Forces engaged").addClass("grey-castle").removeClass("hoverglow");
+    $(".east-castle").addClass("grey-castle");
     window.setTimeout(function(){
       if (gameOver === 0){
         waitForYourTurn = 0;
-        $(".player-castle").text("Start battle").removeClass("grey-castle");
-        $(".computer-castle").removeClass("grey-castle");
+        $(".west-castle").text("Start battle").removeClass("grey-castle").addClass("hoverglow");
+        $(".east-castle").removeClass("grey-castle");
       }
       else {
         decideWinner();
@@ -48,14 +60,14 @@ $(".player-castle").click(function(){
 function warBattle(){
   $(".shuffle").text("A battle begins!");
   setTimeout(function(){
-    battleArray.unshift(splitDeck.shift());
-    $(".computer-battle").text(battleArray[0]);
-    battleArray.unshift(warDeck.shift());
-    $(".player-battle").text(battleArray[0]);
+    battleArray.unshift(east.deck.shift());
+    $(".east-battle").text(battleArray[0]);
+    battleArray.unshift(west.deck.shift());
+    $(".west-battle").text(battleArray[0]);
     updateScores();
     if (battleArray[0] > battleArray[1]){
-      warDeck.push(battleArray.shift());
-      warDeck.push(battleArray.shift());
+      west.deck.push(battleArray.shift());
+      west.deck.push(battleArray.shift());
       setTimeout(function(){
         updateScores();
         $(".shuffle").text("West Kingdom gains ground");
@@ -63,8 +75,8 @@ function warBattle(){
       }, 500);
     }
     else if (battleArray[1] > battleArray[0]){
-      splitDeck.push(battleArray.shift());
-      splitDeck.push(battleArray.shift());
+      east.deck.push(battleArray.shift());
+      east.deck.push(battleArray.shift());
       setTimeout(function(){
         updateScores();
         $(".shuffle").text("East Kingdom gains ground");
@@ -75,7 +87,7 @@ function warBattle(){
         inAD2101WarWasBeginning();
       }
   }, 500);
-  if (warDeck.length === 0){
+  if (west.deck.length === 0){
     gameOver = 1;
   }
 }
@@ -85,30 +97,27 @@ function warBattle(){
 function inAD2101WarWasBeginning(){
   console.log("Somebody set up us the bomb!!");
   $(".shuffle").html("<p style=\"margin-top: -15px; font-size: 225%; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #fff, 0 0 40px #ff0000, 0 0 70px #ff0000, 0 0 80px #ff0000, 0 0 100px #ff0000, 0 0 150px #ff0000;\">War!</p>");
-  battleArray.push(splitDeck.shift());
-  battleArray.push(splitDeck.shift());
-  battleArray.unshift(splitDeck.shift());
-  $(".computer-battle").html(warComputerBattleResult + "<br />" + drawCardComputer2 + "<br />" + drawCardComputer3);
-  battleArrayWarPlayer.push(splitDeck.shift());
-  battleArrayWarPlayer.push(splitDeck.shift());
-  battleArrayWarPlayer.unshift(splitDeck.shift());
-  $(".player-battle").html(warPlayerBattleResult + "<br />" + drawCardPlayer2 + "<br />" + drawCardPlayer3);
+  // drawWarCards(east.deck, battleArray);
+  battleArray.push(east.deck.shift());
+  battleArray.push(east.deck.shift());
+  battleArray.unshift(east.deck.shift());
+  $(".east-battle").html(warComputerBattleResult + "<br />" + drawCardComputer2 + "<br />" + drawCardComputer3);
+  // drawWarCards(west.deck, battleArrayWarWest);
+  battleArrayWarWest.push(east.deck.shift());
+  battleArrayWarWest.push(east.deck.shift());
+  battleArrayWarWest.unshift(east.deck.shift());
+  $(".west-battle").html(warWestBattleResult + "<br />" + drawCardWest2 + "&nbsp; &nbsp; &nbsp;" + drawCardWest3);
   battleArray = [ " " ];
   console.log("For great justice.");
 }
 
 ///////////////////////// Card deck array & shuffle button
 
-// 14 is Ace, 13 is King, 12 is Queen, 11 is Jack.
-var warDeck = [
-  14, 14, 14, 14, 13, 13, 13, 13, 12, 12, 12, 12, 11, 11, 11, 11, 10, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2
-];
-
 function cutTheDeck(){
-  console.log(warDeck);
-  splitDeck = warDeck.splice(26, 52);
-  console.log(splitDeck);
-  console.log(warDeck);
+  console.log(west.deck);
+  east.deck = west.deck.splice(26, 52);
+  console.log(east.deck);
+  console.log(west.deck);
   updateScores();
 }
 
@@ -117,14 +126,14 @@ $(".shuffle").click(function(){
     return;
   }
   hasDoneFirstShuffle = 1;
-  $(".player-castle").html("Start battle").removeClass("grey-castle");
-  $(".computer-castle").removeClass("grey-castle");
-  $(".shuffle").text("Game initiated");
-  for (i = warDeck.length - 1; i > 0; i--){
+  $(".west-castle").html("Start battle").removeClass("grey-castle").addClass("hoverglow");
+  $(".east-castle").removeClass("grey-castle");
+  $(".shuffle").text("Game initiated").removeClass("hoverglow");
+  for (i = west.deck.length - 1; i > 0; i--){
     var j = Math.floor(Math.random() * (i + 1));
-    var temp = warDeck[i];
-    warDeck[i] = warDeck[j];
-    warDeck[j] = temp;
+    var temp = west.deck[i];
+    west.deck[i] = west.deck[j];
+    west.deck[j] = temp;
   }
   cutTheDeck();
 });
@@ -132,20 +141,20 @@ $(".shuffle").click(function(){
 ///////////////////////// Decide the winner
 
 function decideWinner(){
-  if (warPlayerScore > warComputerScore){
-    $(".shuffle").text("West Kingdom victorious");
-    $(".player-castle").text("Victory!").removeClass("grey-castle");
-    $(".computer-castle").html("<img src=\"fire.gif\" alt=\"Fire is destroying the west castle.\" />").removeClass("grey-castle");
+  if (warWestScore > warComputerScore){
+    $(".shuffle").text("West Kingdom is victorious");
+    $(".west-castle").text("Victory!").removeClass("grey-castle");
+    $(".east-castle").html("<img src=\"fire.gif\" alt=\"Fire is destroying the west castle.\" />").removeClass("grey-castle");
   }
-  if (warComputerScore > warPlayerScore){
-    $(".shuffle").text("East Kingdom victorious");
-    $(".computer-castle").text("Victory!").removeClass("grey-castle");
-    $(".player-castle").html("<img src=\"fire.gif\" alt=\"Fire is destroying the east castle.\" />").removeClass("grey-castle");
+  if (warComputerScore > warWestScore){
+    $(".shuffle").text("East Kingdom is victorious!");
+    $(".east-castle").text("Victory!").removeClass("grey-castle");
+    $(".west-castle").html("<img src=\"fire.gif\" alt=\"Fire is destroying the east castle.\" />").removeClass("grey-castle");
   }
   else {
-    $(".shuffle").text("An armistice is signed");
-    $(".player-castle").text("Draw").removeClass("grey-castle");
-    $(".computer-castle").text("Draw").removeClass("grey-castle");
+    $(".shuffle").text("An armistice is signed.");
+    $(".west-castle").text("Draw").removeClass("grey-castle");
+    $(".east-castle").text("Draw").removeClass("grey-castle");
   }
 }
 
