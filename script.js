@@ -11,13 +11,22 @@ var hasDoneFirstShuffle = 0;
 var splitDeck = [ " " ];
 var gameOver = 0;
 
+///////////////////////// Update both scores
+
+function updateScores(){
+warPlayerScore = warDeck.length;
+warComputerScore = splitDeck.length;
+$(".player-score").text(warPlayerScore);
+$(".computer-score").text(warComputerScore);
+}
+
 ///////////////////////// Click the castle
 
 $(".player-castle").click(function(){
   if (hasDoneFirstShuffle === 1 && waitForYourTurn === 0){
     warBattle();
     waitForYourTurn = 1;
-    $(".player-castle").text("Resolving battle...").addClass("grey-castle");
+    $(".player-castle").text("Forces engaged").addClass("grey-castle");
     $(".computer-castle").addClass("grey-castle");
     window.setTimeout(function(){
       if (gameOver === 0){
@@ -37,26 +46,28 @@ $(".player-castle").click(function(){
 function warBattle(){
   $(".shuffle").text("A battle begins!");
   setTimeout(function(){
-    warPlayerBattleResult = warDeck.pop();
+    warPlayerBattleResult = warDeck.shift();
     $(".player-battle").text(warPlayerBattleResult);
-    warComputerBattleResult = splitDeck.pop();
+    warComputerBattleResult = splitDeck.shift();
     $(".computer-battle").text(warComputerBattleResult);
     if (warPlayerBattleResult > warComputerBattleResult){
-      warPlayerScore++;
+      warDeck.push(warPlayerBattleResult);
+      warDeck.push(warComputerBattleResult);
       setTimeout(function(){
-        $(".player-score").text(warPlayerScore);
+        updateScores();
         $(".shuffle").text("West Kingdom gains ground");
       }, 500);
     }
     else if (warComputerBattleResult > warPlayerBattleResult){
-      warComputerScore++;
+      splitDeck.push(warComputerBattleResult);
+      splitDeck.push(warPlayerBattleResult);
       setTimeout(function(){
-        $(".computer-score").text(warComputerScore);
+        updateScores();
         $(".shuffle").text("East Kingdom gains ground");
       }, 500);
     }
     else {
-      $(".shuffle").text("Draw");
+      $(".shuffle").html("<p style=\"margin-top: -15px; font-size: 225%; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #fff, 0 0 40px #ff0000, 0 0 70px #ff0000, 0 0 80px #ff0000, 0 0 100px #ff0000, 0 0 150px #ff0000;\">War!</p>");
     }
   }, 500);
   if (warDeck.length === 0){
@@ -76,6 +87,7 @@ function cutTheDeck(){
   splitDeck = warDeck.splice(26, 52);
   console.log(splitDeck);
   console.log(warDeck);
+  updateScores();
 }
 
 $(".shuffle").click(function(){
@@ -83,9 +95,9 @@ $(".shuffle").click(function(){
     return;
   }
   hasDoneFirstShuffle = 1;
-  $(".player-castle").text("Start battle").removeClass("grey-castle");
+  $(".player-castle").html("Start battle").removeClass("grey-castle");
   $(".computer-castle").removeClass("grey-castle");
-  $(".shuffle").text("War declared").addClass("grey-castle");
+  $(".shuffle").text("Game initiated");
   for (i = warDeck.length - 1; i > 0; i--){
     var j = Math.floor(Math.random() * (i + 1));
     var temp = warDeck[i];
@@ -115,5 +127,5 @@ function decideWinner(){
   }
 }
 
-/////////////////////// {stop} /////// DON'T WRITE CODE PAST HERE OR IT WON'T WORK /////// {stop} /////////////////////////
+/////////////////////// {stop} /////// DON'T WRITE CODE PAST HERE DUMMY OR IT WON'T WORK /////// {stop} /////////////////////////
 });
