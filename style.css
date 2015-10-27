@@ -133,8 +133,9 @@ body {
   float: left;
 }
 
-.victory-glow {
-
+.draw-battle {
+  margin-top: -50px;
+  font-size: 75%;
 }
 
 /* --------------- Shuffle --------------- */

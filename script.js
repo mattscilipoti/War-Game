@@ -10,6 +10,10 @@ var waitForYourTurn = 0;
 var hasDoneFirstShuffle = 0;
 var splitDeck = [ " " ];
 var gameOver = 0;
+var drawCardPlayer1 = 0;
+var drawCardPlayer2 = 0;
+var drawCardComputer1 = 0;
+var drawCardComputer2 = 0;
 
 ///////////////////////// Update both scores
 
@@ -50,6 +54,7 @@ function warBattle(){
     $(".player-battle").text(warPlayerBattleResult);
     warComputerBattleResult = splitDeck.shift();
     $(".computer-battle").text(warComputerBattleResult);
+    updateScores();
     if (warPlayerBattleResult > warComputerBattleResult){
       warDeck.push(warPlayerBattleResult);
       warDeck.push(warComputerBattleResult);
@@ -68,6 +73,7 @@ function warBattle(){
     }
     else {
       $(".shuffle").html("<p style=\"margin-top: -15px; font-size: 225%; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #fff, 0 0 40px #ff0000, 0 0 70px #ff0000, 0 0 80px #ff0000, 0 0 100px #ff0000, 0 0 150px #ff0000;\">War!</p>");
+
     }
   }, 500);
   if (warDeck.length === 0){
