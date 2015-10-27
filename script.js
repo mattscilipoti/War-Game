@@ -10,10 +10,8 @@ var waitForYourTurn = 0;
 var hasDoneFirstShuffle = 0;
 var splitDeck = [ " " ];
 var gameOver = 0;
-var drawCardPlayer2 = 0;
-var drawCardPlayer3 = 0;
-var drawCardComputer2 = 0;
-var drawCardComputer3 = 0;
+var battleArray = [ " " ];
+var battleArrayWarPlayer = [ " " ];
 
 ///////////////////////// Update both scores
 
@@ -50,40 +48,53 @@ $(".player-castle").click(function(){
 function warBattle(){
   $(".shuffle").text("A battle begins!");
   setTimeout(function(){
-    warPlayerBattleResult = warDeck.shift();
-    $(".player-battle").text(warPlayerBattleResult);
-    warComputerBattleResult = splitDeck.shift();
-    $(".computer-battle").text(warComputerBattleResult);
+    battleArray.unshift(splitDeck.shift());
+    $(".computer-battle").text(battleArray[0]);
+    battleArray.unshift(warDeck.shift());
+    $(".player-battle").text(battleArray[0]);
     updateScores();
-    if (warPlayerBattleResult > warComputerBattleResult){
-      warDeck.push(warPlayerBattleResult);
-      warDeck.push(warComputerBattleResult);
+    if (battleArray[0] > battleArray[1]){
+      warDeck.push(battleArray.shift());
+      warDeck.push(battleArray.shift());
       setTimeout(function(){
         updateScores();
         $(".shuffle").text("West Kingdom gains ground");
+        battleArray = [ " " ];
       }, 500);
     }
-    else if (warComputerBattleResult > warPlayerBattleResult){
-      splitDeck.push(warComputerBattleResult);
-      splitDeck.push(warPlayerBattleResult);
+    else if (battleArray[1] > battleArray[0]){
+      splitDeck.push(battleArray.shift());
+      splitDeck.push(battleArray.shift());
       setTimeout(function(){
         updateScores();
         $(".shuffle").text("East Kingdom gains ground");
+        battleArray = [ " " ];
       }, 500);
     }
     else {
-      $(".shuffle").html("<p style=\"margin-top: -15px; font-size: 225%; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #fff, 0 0 40px #ff0000, 0 0 70px #ff0000, 0 0 80px #ff0000, 0 0 100px #ff0000, 0 0 150px #ff0000;\">War!</p>");
-      drawCardPlayer2 = warDeck.shift();
-      drawCardPlayer3 = warDeck.shift();
-      $(".player-battle").html(warPlayerBattleResult + "<br />" + drawCardPlayer2 + "<br />" + drawCardPlayer3);
-      drawCardComputer2 = warDeck.shift();
-      drawCardComputer3 = warDeck.shift();
-      $(".computer-battle").html(warComputerBattleResult + "<br />" + drawCardComputer2 + "<br />" + drawCardComputer3);
-    }
+        inAD2101WarWasBeginning();
+      }
   }, 500);
   if (warDeck.length === 0){
     gameOver = 1;
   }
+}
+
+////////////////////// All your card are belong to us
+
+function inAD2101WarWasBeginning(){
+  console.log("Somebody set up us the bomb!!");
+  $(".shuffle").html("<p style=\"margin-top: -15px; font-size: 225%; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #fff, 0 0 40px #ff0000, 0 0 70px #ff0000, 0 0 80px #ff0000, 0 0 100px #ff0000, 0 0 150px #ff0000;\">War!</p>");
+  battleArray.push(splitDeck.shift());
+  battleArray.push(splitDeck.shift());
+  battleArray.unshift(splitDeck.shift());
+  $(".computer-battle").html(warComputerBattleResult + "<br />" + drawCardComputer2 + "<br />" + drawCardComputer3);
+  battleArrayWarPlayer.push(splitDeck.shift());
+  battleArrayWarPlayer.push(splitDeck.shift());
+  battleArrayWarPlayer.unshift(splitDeck.shift());
+  $(".player-battle").html(warPlayerBattleResult + "<br />" + drawCardPlayer2 + "<br />" + drawCardPlayer3);
+  battleArray = [ " " ];
+  console.log("For great justice.");
 }
 
 ///////////////////////// Card deck array & shuffle button
