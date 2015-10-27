@@ -164,6 +164,18 @@ body {
   font-size: 75%;
 }
 
+.war-section {
+  margin: 0 auto 0 auto;
+  background-color: rgba(63,93,1,1);
+  border-radius: 10px;
+  width: 350px;
+  padding: 25px;
+  font-family: "Rajdhani", serif;
+  font-weight: 300;
+  color: #FFF;
+  font-size: 100px;
+}
+
 /* --------------- Shuffle --------------- */
 
 .shuffle {

@@ -84,7 +84,7 @@ function warBattle(){
       }, 500);
     }
     else {
-        inAD2101WarWasBeginning();
+        aDrawMeansWar();
       }
   }, 500);
   if (west.deck.length === 0){
@@ -92,10 +92,9 @@ function warBattle(){
   }
 }
 
-////////////////////// All your card are belong to us
+////////////////////// War in the event of a draw
 
-function inAD2101WarWasBeginning(){
-  console.log("Somebody set up us the bomb!!");
+function aDrawMeansWar(){
   $(".shuffle").html("<p style=\"margin-top: -15px; font-size: 225%; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #fff, 0 0 40px #ff0000, 0 0 70px #ff0000, 0 0 80px #ff0000, 0 0 100px #ff0000, 0 0 150px #ff0000;\">War!</p>");
   // drawWarCards(east.deck, battleArray);
   battleArray.push(east.deck.shift());
@@ -108,7 +107,6 @@ function inAD2101WarWasBeginning(){
   battleArrayWarWest.unshift(east.deck.shift());
   $(".west-battle").html(warWestBattleResult + "<br />" + drawCardWest2 + "&nbsp; &nbsp; &nbsp;" + drawCardWest3);
   battleArray = [ " " ];
-  console.log("For great justice.");
 }
 
 ///////////////////////// Card deck array & shuffle button
