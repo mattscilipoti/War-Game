@@ -125,18 +125,21 @@ function winTheBattle(kingdom){
   }, 500);
 }
 
-////////////////////// Fake war
+////////////////////// Fake war because I fail at real war
 
 function aDrawMeansWar() {
   setTimeout(function(){
+    west.deck.unshift();
+    west.deck.unshift();
+    east.deck.unshift();
+    east.deck.unshift();
+    battleArray = [ " " ];
     updateScores();
     $(".shuffle").text("Each side loses ground.");
-    battleArray = [ " " ];
   }, 500);
 }
 
-
-/*                                                    <---Ugh. All of it. UGH.
+/*                                                    <--- Fail war
 
 ////////////////////// War in the event of a draw
 
@@ -151,11 +154,13 @@ function aDrawMeansWar(){
 ///////////////////////// Set up area for war cards
 
 function setUpWarStage(kingdom1, kingdom2) {
+  var westDraw = kingdom1;
+  var eastDraw = kingdom2;
   var westWarArray = [ " " ];
   var eastWarArray = [ " " ];
   $(".war-section").append("<div class=\"war-stage\"></div>");
-  drawCardsForWar(kingdom1, westWarArray);
-  drawCardsForWar(kingdom2, eastWarArray);
+  drawCardsForWar(westDraw, westWarArray);
+  drawCardsForWar(eastDraw, eastWarArray);
 }
 
 ///////////////////////// Draw cards into temporary war arrays
@@ -215,5 +220,4 @@ $(document).keyup(function(e){
    }
 });
 
-/////////////////////// {stop} /////// DON'T WRITE CODE PAST HERE DUMMY OR IT WON'T WORK /////// {stop} /////////////////////////
 });

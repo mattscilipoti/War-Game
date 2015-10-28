@@ -1,5 +1,15 @@
 ## Project 1 - War
 
+### Explanations
+
+#### Technologies used
+
+#### Approach taken
+
+#### Installation instructions
+
+#### Unsolved problems
+
 ### User stories
 
 1. As a user, I want to be able to see the cards flip so I feel like I'm playing a real card game.

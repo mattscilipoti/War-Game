@@ -170,7 +170,7 @@ body {
   color: #FFF;
   font-size: 100px;
   overflow: auto;
-  zoom: 1;
+  zoom: 1; /* Fix for old IE versions */
   display: none;
 }
 
