@@ -2,7 +2,7 @@
 
 window.setTimeout(function(){
     $(".overlay").fadeOut("6000", function(){});
-}, 1500);
+}, 1200);
 
   //gameInitialize();
   // $(".shuffle").click(shuffleDeck);
@@ -19,13 +19,13 @@ var east = {
   deck: [ " " ],
 };
 
+var waitTime = 1500;
 var warWestBattleResult = 0;
 var warComputerBattleResult = 0;
 var waitForYourTurn = 0;
 var hasDoneFirstShuffle = 0;
 var gameOver = 0;
 var battleArray = [ " " ];
-var battleArrayWarWest = [ " " ];
 
 ///////////////////////// Update both scores to reflect current deck sizes
 
@@ -62,7 +62,7 @@ function cutTheDeck(){
 
 ///////////////////////// Click the castle to start a battle
 
-$(".west-castle").click(function(){
+$(".west-castle").click(function() {
   if (hasDoneFirstShuffle === 1 && waitForYourTurn === 0){
     decideBattle();
     waitForYourTurn = 1;
@@ -77,7 +77,7 @@ $(".west-castle").click(function(){
       else {
         decideWinner();
       }
-    }, 1500);
+    }, waitTime);
   }
 });
 
@@ -125,22 +125,37 @@ function winTheBattle(kingdom){
   }, 500);
 }
 
+////////////////////// Fake war
+
+function aDrawMeansWar() {
+  setTimeout(function(){
+    updateScores();
+    $(".shuffle").text("Each side loses ground.");
+    battleArray = [ " " ];
+  }, 500);
+}
+
+
+/*                                                    <---Ugh. All of it. UGH.
+
 ////////////////////// War in the event of a draw
 
 function aDrawMeansWar(){
+  var west = this.west;
+  var east = this.east;
   $(".shuffle").addClass("shuffle-war").text("War!");
   $(".war-section").css("display", "block");
-  setUpWarStage();
+  setUpWarStage(west , east);
 }
 
 ///////////////////////// Set up area for war cards
 
-function setUpWarStage() {
-  $(".war-section").append("<div class=\"war-stage\"></div>");
+function setUpWarStage(kingdom1, kingdom2) {
   var westWarArray = [ " " ];
   var eastWarArray = [ " " ];
-  drawCardsForWar(east, eastWarArray);
-  drawCardsForWar(west, westWarArray);
+  $(".war-section").append("<div class=\"war-stage\"></div>");
+  drawCardsForWar(kingdom1, westWarArray);
+  drawCardsForWar(kingdom2, eastWarArray);
 }
 
 ///////////////////////// Draw cards into temporary war arrays
@@ -158,7 +173,7 @@ function drawCardsForWar(kingdom, array) {
   }
 }
 
-///////////////////////// War stage
+*/
 
 ///////////////////////// Decide the winner
 
@@ -179,6 +194,26 @@ function decideWinner(){
     $(".east-castle").text("Draw").removeClass("grey-castle");
   }
 }
+
+//////////////////////// SuperClick mode
+
+function superClick() {
+  $(".west-castle").trigger("click");
+}
+
+$(document).keydown(function(e){
+  if (e.which == 13) {
+      waitTime = 20;
+      setInterval(superClick(), 20);
+   }
+});
+
+$(document).keyup(function(e){
+  if (e.which == 13) {
+      waitTime = 1500;
+      clearInterval();
+   }
+});
 
 /////////////////////// {stop} /////// DON'T WRITE CODE PAST HERE DUMMY OR IT WON'T WORK /////// {stop} /////////////////////////
 });
