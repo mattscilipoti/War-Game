@@ -27,97 +27,14 @@ var gameOver = 0;
 var battleArray = [ " " ];
 var battleArrayWarWest = [ " " ];
 
-///////////////////////// Update both scores
+///////////////////////// Update both scores to reflect current deck sizes
 
 function updateScores(){
 $(".west-score").text(west.deck.length);
 $(".east-score").text(east.deck.length);
 }
 
-///////////////////////// Click the castle
-
-$(".west-castle").click(function(){
-  if (hasDoneFirstShuffle === 1 && waitForYourTurn === 0){
-    warBattle();
-    waitForYourTurn = 1;
-    $(".west-castle").text("Forces engaged").addClass("grey-castle").removeClass("hoverglow");
-    $(".east-castle").addClass("grey-castle");
-    window.setTimeout(function(){
-      if (gameOver === 0){
-        waitForYourTurn = 0;
-        $(".west-castle").text("Start battle").removeClass("grey-castle").addClass("hoverglow");
-        $(".east-castle").removeClass("grey-castle");
-      }
-      else {
-        decideWinner();
-      }
-    }, 1500);
-  }
-});
-
-///////////////////////// Battle & compare
-
-function warBattle(){
-  $(".shuffle").text("A battle begins!");
-  setTimeout(function(){
-    battleArray.unshift(east.deck.shift());
-    $(".east-battle").text(battleArray[0]);
-    battleArray.unshift(west.deck.shift());
-    $(".west-battle").text(battleArray[0]);
-    updateScores();
-    if (battleArray[0] > battleArray[1]){
-      west.deck.push(battleArray.shift());
-      west.deck.push(battleArray.shift());
-      setTimeout(function(){
-        updateScores();
-        $(".shuffle").text("West Kingdom gains ground");
-        battleArray = [ " " ];
-      }, 500);
-    }
-    else if (battleArray[1] > battleArray[0]){
-      east.deck.push(battleArray.shift());
-      east.deck.push(battleArray.shift());
-      setTimeout(function(){
-        updateScores();
-        $(".shuffle").text("East Kingdom gains ground");
-        battleArray = [ " " ];
-      }, 500);
-    }
-    else {
-        aDrawMeansWar();
-      }
-  }, 500);
-  if (west.deck.length === 0){
-    gameOver = 1;
-  }
-}
-
-////////////////////// War in the event of a draw
-
-function aDrawMeansWar(){
-  $(".shuffle").html("<p style=\"margin-top: -15px; font-size: 225%; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #fff, 0 0 40px #ff0000, 0 0 70px #ff0000, 0 0 80px #ff0000, 0 0 100px #ff0000, 0 0 150px #ff0000;\">War!</p>");
-  // drawWarCards(east.deck, battleArray);
-  battleArray.push(east.deck.shift());
-  battleArray.push(east.deck.shift());
-  battleArray.unshift(east.deck.shift());
-  $(".east-battle").html(warComputerBattleResult + "<br />" + drawCardComputer2 + "<br />" + drawCardComputer3);
-  // drawWarCards(west.deck, battleArrayWarWest);
-  battleArrayWarWest.push(east.deck.shift());
-  battleArrayWarWest.push(east.deck.shift());
-  battleArrayWarWest.unshift(east.deck.shift());
-  $(".west-battle").html(warWestBattleResult + "<br />" + drawCardWest2 + "&nbsp; &nbsp; &nbsp;" + drawCardWest3);
-  battleArray = [ " " ];
-}
-
-///////////////////////// Card deck array & shuffle button
-
-function cutTheDeck(){
-  console.log(west.deck);
-  east.deck = west.deck.splice(26, 52);
-  console.log(east.deck);
-  console.log(west.deck);
-  updateScores();
-}
+///////////////////////// Shuffle the deck at the beginning of game
 
 $(".shuffle").click(function(){
   if (hasDoneFirstShuffle === 1){
@@ -135,6 +52,109 @@ $(".shuffle").click(function(){
   }
   cutTheDeck();
 });
+
+////////////////////////// Split the deck in half & give half to east player at beginning of game
+
+function cutTheDeck(){
+  east.deck = west.deck.splice(26, 52);
+  updateScores();
+}
+
+///////////////////////// Click the castle to start a battle
+
+$(".west-castle").click(function(){
+  if (hasDoneFirstShuffle === 1 && waitForYourTurn === 0){
+    decideBattle();
+    waitForYourTurn = 1;
+    $(".west-castle").text("Forces engaged").addClass("grey-castle").removeClass("hoverglow");
+    $(".east-castle").addClass("grey-castle");
+    window.setTimeout(function(){
+      if (gameOver === 0){
+        waitForYourTurn = 0;
+        $(".west-castle").text("Start battle").removeClass("grey-castle").addClass("hoverglow");
+        $(".east-castle").removeClass("grey-castle");
+      }
+      else {
+        decideWinner();
+      }
+    }, 1500);
+  }
+});
+
+///////////////////////// Resolve a battle
+
+function decideBattle(){
+  $(".shuffle").removeClass("shuffle-war").text("Resolving battle...");
+  $(".war-section").css("display", "none");
+  setTimeout(function(){
+    drawCardsForBattle(east, battleArray);
+    drawCardsForBattle(west, battleArray);
+//    battleArray.unshift(east.deck.shift());
+//    $(".east-battle").text(battleArray[0]);
+//    battleArray.unshift(west.deck.shift());
+//    $(".west-battle").text(battleArray[0]);
+    updateScores();
+    if (battleArray[0] > battleArray[1]){
+      winTheBattle(west);
+    }
+    else if (battleArray[1] > battleArray[0]){
+      winTheBattle(east);
+    }
+    else {
+        aDrawMeansWar();
+      }
+  }, 500);
+  if (west.deck.length === 0){
+    gameOver = 1;
+  }
+}
+
+///////////////////////// Draw cards into temporary battle array
+
+function drawCardsForBattle(kingdom, array) {
+  console.log(kingdom);
+  array.unshift(kingdom.deck.shift());
+  $("." + kingdom.name.toLowerCase() + "-battle").text(array[0]);
+}
+
+///////////////////////// Give cards to battle-winning player
+
+function winTheBattle(kingdom){
+  kingdom.deck.push(battleArray.shift());
+  kingdom.deck.push(battleArray.shift());
+  setTimeout(function(){
+    updateScores();
+    $(".shuffle").text( kingdom.name + " Kingdom gains ground");
+    battleArray = [ " " ];
+  }, 500);
+}
+
+////////////////////// War in the event of a draw
+
+function aDrawMeansWar(){
+  $(".shuffle").addClass("shuffle-war").text("War!");
+  $(".war-section").css("display", "block");
+  var westWarArray = [ " " ];
+  var eastWarArray = [ " " ];
+  warDraw(east, eastWarArray);
+  warDraw(west, westWarArray);
+}
+
+///////////////////////// Draw cards into temporary war arrays
+
+function drawCardsForWar(kingdom, array) {
+  if (kingdom.deck.length > 0) {
+    array.push(kingdom.deck.shift());
+    array.push(kingdom.deck.shift());
+    array.unshift(kingdom.deck.shift());
+    $("." + kingdom.name.toLowerCase() + "-war").html(warComputerBattleResult + "<br />" + drawCardComputer2 + "<br />" + drawCardComputer3);
+  }
+  else {
+    decideWinner();
+  }
+}
+
+///////////////////////// War stage
 
 ///////////////////////// Decide the winner
 

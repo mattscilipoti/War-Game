@@ -105,10 +105,12 @@ body {
 /* --------------- Castles --------------- */
 
 .castle {
+  float: left;
   width: 220px;
   height: 220px;
   margin: 5px;
   padding: 70px 20px 0 20px;
+  border-radius: 20px;
   font-family: "Rajdhani", serif;
   font-weight: 300;
   text-transform: uppercase;
@@ -116,21 +118,12 @@ body {
   font-weight: 700;
   color: #FFF;
   font-size: 30px;
+  background-color: rgba(63,93,190,0.5);
+  overflow: hidden;
 }
 
 .west-castle {
-  float: left;
-  background-color: #17607D;
-  border: solid 3px #17607D;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.east-castle {
-  float: left;
-  background-color: #17607D;
-  border-radius: 20px;
-  overflow: hidden;
+  border: solid 3px rgba(63,93,190,0);
 }
 
 .grey-castle {
@@ -174,15 +167,28 @@ body {
   font-weight: 300;
   color: #FFF;
   font-size: 100px;
+  overflow: auto;
+  zoom: 1;
 }
 
-/* --------------- Shuffle --------------- */
+.war-stage {
+  overflow: auto;
+  zoom: 1;
+}
+
+.west-war {
+  float: left;
+}
+
+.east-war {
+  float: right;
+}
+
+/* --------------- Shuffle Button / Notification Area --------------- */
 
 .shuffle {
   text-align: center;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 20px auto 30px auto;
   width: 500px;
   height: 75px;
   background-color: rgba(63,93,190,0.5);
@@ -195,4 +201,12 @@ body {
   letter-spacing: 6px;
   color: #FFF;
   font-size: 20px;
+}
+
+.shuffle-war {
+  text-shadow: 0 0 10px #ff0000,
+    0 0 20px #ff0000,
+    0 0 40px #ff0000,
+    0 0 70px #ff0000,
+    0 0 80px #ff0000,
 }
