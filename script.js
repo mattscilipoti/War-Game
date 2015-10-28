@@ -2,7 +2,7 @@
 
 window.setTimeout(function(){
     $(".overlay").fadeOut("6000", function(){});
-}, 1200);
+}, 3000);
 
   //gameInitialize();
   // $(".shuffle").click(shuffleDeck);
