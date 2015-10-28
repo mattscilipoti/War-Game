@@ -44,7 +44,7 @@ $(".shuffle").click(function(){
   $(".west-castle").html("Start battle").removeClass("grey-castle").addClass("hoverglow");
   $(".east-castle").removeClass("grey-castle");
   $(".shuffle").text("Game initiated").removeClass("hoverglow");
-  for (i = west.deck.length - 1; i > 0; i--){
+  for (var i = west.deck.length - 1; i > 0; i--){
     var j = Math.floor(Math.random() * (i + 1));
     var temp = west.deck[i];
     west.deck[i] = west.deck[j];
@@ -89,10 +89,6 @@ function decideBattle(){
   setTimeout(function(){
     drawCardsForBattle(east, battleArray);
     drawCardsForBattle(west, battleArray);
-//    battleArray.unshift(east.deck.shift());
-//    $(".east-battle").text(battleArray[0]);
-//    battleArray.unshift(west.deck.shift());
-//    $(".west-battle").text(battleArray[0]);
     updateScores();
     if (battleArray[0] > battleArray[1]){
       winTheBattle(west);
@@ -134,10 +130,17 @@ function winTheBattle(kingdom){
 function aDrawMeansWar(){
   $(".shuffle").addClass("shuffle-war").text("War!");
   $(".war-section").css("display", "block");
+  setUpWarStage();
+}
+
+///////////////////////// Set up area for war cards
+
+function setUpWarStage() {
+  $(".war-section").append("<div class=\"war-stage\"></div>");
   var westWarArray = [ " " ];
   var eastWarArray = [ " " ];
-  warDraw(east, eastWarArray);
-  warDraw(west, westWarArray);
+  drawCardsForWar(east, eastWarArray);
+  drawCardsForWar(west, westWarArray);
 }
 
 ///////////////////////// Draw cards into temporary war arrays
@@ -147,7 +150,8 @@ function drawCardsForWar(kingdom, array) {
     array.push(kingdom.deck.shift());
     array.push(kingdom.deck.shift());
     array.unshift(kingdom.deck.shift());
-    $("." + kingdom.name.toLowerCase() + "-war").html(warComputerBattleResult + "<br />" + drawCardComputer2 + "<br />" + drawCardComputer3);
+    $(".war-stage").append("." + kingdom.name.toLowerCase() + "-war");
+    $("." + kingdom.name.toLowerCase() + "-war").text(array[0]);
   }
   else {
     decideWinner();

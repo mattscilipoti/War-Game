@@ -157,6 +157,8 @@ body {
   font-size: 75%;
 }
 
+/* --------------- Wars --------------- */
+
 .war-section {
   margin: 0 auto 0 auto;
   background-color: rgba(63,93,1,1);
@@ -169,6 +171,7 @@ body {
   font-size: 100px;
   overflow: auto;
   zoom: 1;
+  display: none;
 }
 
 .war-stage {
