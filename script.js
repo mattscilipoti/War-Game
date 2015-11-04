@@ -11,6 +11,7 @@ window.setTimeout(function(){
 
 var west = {
   name: "West",
+  // mms: recommend move full deck out of east/west.  Assign to east/west as you split the deck.
   deck: [ 14, 14, 14, 14, 13, 13, 13, 13, 12, 12, 12, 12, 11, 11, 11, 11, 10, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2 ],
 };
 
@@ -20,6 +21,7 @@ var east = {
 };
 
 var waitTime = 1500;
+// mms: move to east/west objects
 var warWestBattleResult = 0;
 var warComputerBattleResult = 0;
 var waitForYourTurn = 0;
@@ -44,6 +46,7 @@ $(".shuffle").click(function(){
   $(".west-castle").html("Start battle").removeClass("grey-castle").addClass("hoverglow");
   $(".east-castle").removeClass("grey-castle");
   $(".shuffle").text("Game initiated").removeClass("hoverglow");
+  // mms: recommend you extract a "shuffle" function, passing the full deck
   for (var i = west.deck.length - 1; i > 0; i--){
     var j = Math.floor(Math.random() * (i + 1));
     var temp = west.deck[i];
